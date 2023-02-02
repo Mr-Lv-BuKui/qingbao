@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>倒计时</title>
+        <style>
+            #box {
+                height: 100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
+            #time {
+                font-size: 36px;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 10px;
+            }
+        </style>
+	</head>
+	<body>
+        <div id="box">
+            <div id="time"></div>
+        </div>
+	</body>
+	<script>
+		const endDate = new Date('2023/02/05 01:00:00')
+        function start(){
+            let result = computeTwoTimeDiff(new Date(), endDate)
+            document.querySelector('#time').innerHTML = result
+        }
+
+        // 计算两个时间差
+		function computeTwoTimeDiff(startTime, endTime) {
+			var stime = new Date(startTime).getTime()
+			var etime = new Date(endTime).getTime()
+			// 两个时间戳相差的毫秒数
+			var usedTime = etime - stime
+			// 计算相差的天数
+			var days = Math.floor(usedTime / (24 * 3600 * 1000))
+			// 计算天数后剩余的毫秒数
+			var leave1 = usedTime % (24 * 3600 * 1000)
+			// 计算出小时数
+			var hours = Math.floor(leave1 / (3600 * 1000))
+            hours =  hours < 10? '0' + hours : hours
+			// 计算小时数后剩余的毫秒数
+			var leave2 = leave1 % (3600 * 1000)
+			// 计算相差分钟数
+			var minutes = Math.floor(leave2 / (60 * 1000))
+            minutes =  minutes < 10? '0' + minutes : minutes
+            // 计算分钟数后剩余的毫秒数
+			var leave3 = leave2 % (60 * 1000)
+            // 计算相差i=秒数
+            var seconds = Math.floor(leave3 / (1000))
+            seconds =  seconds < 10? '0' + seconds : seconds
+			var time = days + '天' + hours + '时' + minutes + '分' + seconds + '秒'
+			return time
+		}
+        // 定时任务
+        let timeInterval = setInterval(start(), 1000)
+	</script>
+</html>
